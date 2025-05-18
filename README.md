@@ -15,28 +15,40 @@ A Next.js web application that uses machine learning to detect diseases in plant
 - Node.js 18.x or later
 - npm or yarn package manager
 - A pre-trained Keras model (`model.h5`) for plant disease detection
+- Python 3.8 or later (for the backend)
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/SibWali/plant-disease-detector.git
 cd plant-disease-detector
 ```
 
-2. Install dependencies:
+2. Install frontend dependencies:
 ```bash
 npm install
 # or
 yarn install
 ```
 
-3. Ensure your `model.h5` file is in the root directory of the project.
+3. Install backend dependencies:
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+4. Ensure your `model.h5` file is in the root directory of the project.
 
 ## Development
 
-Run the development server:
+1. Start the Python backend:
+```bash
+cd backend
+python main.py
+```
 
+2. In a new terminal, start the frontend development server:
 ```bash
 npm run dev
 # or
@@ -47,13 +59,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deployment
 
-This application is compatible with Vercel deployment. To deploy:
+This application has two components that need to be deployed separately:
 
-1. Push your code to a GitHub repository
+### Frontend (Vercel)
+1. Push your code to GitHub
 2. Connect your repository to Vercel
 3. Deploy
 
-Note: Make sure to include your `model.h5` file in the deployment.
+### Backend (Choose one)
+- Heroku
+- Google Cloud Run
+- AWS Lambda
+- DigitalOcean App Platform
+
+Note: After deploying the backend, update the `NEXT_PUBLIC_API_URL` environment variable in your Vercel project settings.
 
 ## Model Information
 
@@ -67,7 +86,8 @@ The application uses a pre-trained Keras model that can detect the following pla
 
 - Next.js 14
 - React 18
-- TensorFlow.js
+- Python FastAPI
+- TensorFlow
 - Tailwind CSS
 - TypeScript
 
