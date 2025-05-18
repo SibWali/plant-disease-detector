@@ -4,13 +4,14 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import io
+import os
 
 app = FastAPI()
 
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],  # Allow all origins in development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,7 +23,7 @@ model = None
 @app.on_event("startup")
 async def load_model():
     global model
-    model = tf.keras.models.load_model("../model.h5")
+    model = tf.keras.models.load_model("model.h5")  # Updated path
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
@@ -56,4 +57,5 @@ async def predict(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port) 
